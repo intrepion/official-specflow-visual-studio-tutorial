@@ -7,6 +7,6 @@ public class Calculator
 
     public int Add()
     {
-        throw new NotImplementedException();
+        return FirstNumber + SecondNumber;
     }
 }
