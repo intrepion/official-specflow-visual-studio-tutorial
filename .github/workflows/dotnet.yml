@@ -15,21 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    - run: echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
-    - run: sudo apt-get update -qqy
-    - run: sudo apt-get -qqy install google-chrome-stable
-    - run: CHROME_VERSION=$(google-chrome-stable --version)
-    - run: CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
-    - run: CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
-    - run: sudo rm /etc/apt/sources.list.d/google-chrome.list
-    - run: export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
-    - run: curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-    - run: unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
-    - run: export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
-    - run: curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-    - run: unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
-    - run: chromedriver -version
+    - run: GECKODRIVER_URL=`curl -Ls -o /dev/null -w %{url_effective} https://github.com/mozilla/geckodriver/releases/latest`
+    - run: GECKODRIVER_VERSION=`echo $GECKODRIVER_URL | sed 's#.*/##'`
+    - run: export GECKODRIVER_DOWNLOAD="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+    - run: curl -L -o geckodriver.tar.gz $GECKODRIVER_DOWNLOAD
+    - run: gunzip -c geckodriver.tar.gz | tar xopf -
+    - run: chmod +x geckodriver && sudo mv geckodriver /usr/local/bin
+    - run: geckodriver --version
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3

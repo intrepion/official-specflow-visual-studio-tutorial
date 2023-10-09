@@ -1,6 +1,6 @@
 using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 
 namespace CalculatorSelenium.Specs.Drivers
 {
@@ -28,18 +28,18 @@ namespace CalculatorSelenium.Specs.Drivers
         /// <returns></returns>
         private IWebDriver CreateWebDriver()
         {
-            //We use the Chrome browser
-            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            //We use the Firefox browser
+            var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
 
-            var chromeOptions = new ChromeOptions();
+            var firefoxOptions = new FirefoxOptions();
 
-            var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
+            var firefoxDriver = new FirefoxDriver(firefoxDriverService, firefoxOptions);
 
-            return chromeDriver;
+            return firefoxDriver;
         }
 
         /// <summary>
-        /// Disposes the Selenium web driver (closing the browser)
+        /// Disposes the Selenium web driver (closing the browser) after the Scenario completed
         /// </summary>
         public void Dispose()
         {
