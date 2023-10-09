@@ -11,20 +11,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - run: GECKODRIVER_URL=`curl -Ls -o /dev/null -w %{url_effective} https://github.com/mozilla/geckodriver/releases/latest`
-    - run: echo $GECKODRIVER_URL
-    - run: GECKODRIVER_VERSION=`echo $GECKODRIVER_URL | sed 's#.*/##'`
-    - run: echo $GECKODRIVER_VERSION
-    - run: export GECKODRIVER_DOWNLOAD="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
-    - run: echo $GECKODRIVER_DOWNLOAD
-    - run: curl -L -o geckodriver.tar.gz $GECKODRIVER_DOWNLOAD
-    - run: gunzip -c geckodriver.tar.gz | tar xopf -
-    - run: chmod +x geckodriver && sudo mv geckodriver /usr/local/bin
-    - run: geckodriver --version
+    - run: |
+        GECKODRIVER_URL=`curl -Ls -o /dev/null -w %{url_effective} https://github.com/mozilla/geckodriver/releases/latest`
+        GECKODRIVER_VERSION=`echo $GECKODRIVER_URL | sed 's#.*/##'`
+        export GECKODRIVER_DOWNLOAD="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+        curl -L -o geckodriver.tar.gz $GECKODRIVER_DOWNLOAD
+        gunzip -c geckodriver.tar.gz | tar xopf -
+        chmod +x geckodriver && sudo mv geckodriver /usr/local/bin
+        geckodriver --version
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
