@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: stable
     - run: chrome --version
     - name: Setup ChromeDriver
       uses: nanasess/setup-chromedriver@v2
