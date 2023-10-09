@@ -1,6 +1,6 @@
 using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
 
 namespace CalculatorSelenium.Specs.Drivers
 {
@@ -28,14 +28,14 @@ namespace CalculatorSelenium.Specs.Drivers
         /// <returns></returns>
         private IWebDriver CreateWebDriver()
         {
-            //We use the Firefox browser
-            var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
+            //We use the Chrome browser
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
 
-            var firefoxOptions = new FirefoxOptions();
+            var chromeOptions = new ChromeOptions();
 
-            var firefoxDriver = new FirefoxDriver(firefoxDriverService, firefoxOptions);
+            var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
 
-            return firefoxDriver;
+            return chromeDriver;
         }
 
         /// <summary>
