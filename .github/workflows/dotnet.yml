@@ -14,20 +14,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
+        echo wget
         wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        echo echo
         echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
+        echo apt-get update
         sudo apt-get update -qqy
+        echo apt-get install
         sudo apt-get -qqy install google-chrome-stable
         CHROME_VERSION=$(google-chrome-stable --version)
+        echo $CHROME_VERSION
         CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
+        echo $CHROME_FULL_VERSION
         CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
+        echo $CHROME_MAJOR_VERSION
+        echo rm
         sudo rm /etc/apt/sources.list.d/google-chrome.list
+        echo export
         export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+        echo $CHROMEDRIVER_VERSION
+        echo curl
         curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+        echo unzip
         unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
+        echo export
         export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+        echo $CHROMEDRIVER_VERSION
+        echo curl
         curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+        echo unzip
         unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
+        echo chromedriver
         chromedriver -version
     - uses: actions/checkout@v3
     - name: Setup .NET
