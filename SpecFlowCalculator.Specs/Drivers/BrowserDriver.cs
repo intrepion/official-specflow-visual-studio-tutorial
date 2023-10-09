@@ -39,7 +39,7 @@ namespace CalculatorSelenium.Specs.Drivers
         }
 
         /// <summary>
-        /// Disposes the Selenium web driver (closing the browser) after the Scenario completed
+        /// Disposes the Selenium web driver (closing the browser)
         /// </summary>
         public void Dispose()
         {

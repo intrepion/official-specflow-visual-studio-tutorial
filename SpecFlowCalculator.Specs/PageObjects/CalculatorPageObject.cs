@@ -104,6 +104,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
                 return result;
             });
+
         }
     }
 }
